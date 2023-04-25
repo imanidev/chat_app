@@ -1,9 +1,9 @@
 import React from "react";
 
-function ChatMessages({ messages }) {
+function Message({ messages }) {
   return (
     <div className="chat-window">
-      {messages.map((message, index) => (
+      {/* {messages.map((message, index) => (
         <div
           key={index}
           className={`message ${
@@ -12,11 +12,11 @@ function ChatMessages({ messages }) {
           }`}
         >
           <div className="message-bubble">{message.text}</div>{" "}
-          {/* display message text */}
+        
         </div>
-      ))}
+      ))} */}
     </div>
   );
 }
 
-export default ChatMessages;
+export default Message;

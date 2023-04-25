@@ -1,27 +1,37 @@
-//
+import React, { useState } from "react";
 
-import React from "react";
+function MessageForm() {
+  const [message, setMessage] = useState("");
 
-function MessageForm({ onSubmit }) {
-  const handleOptionClick = (option) => {
-    onSubmit(option);
+  const handleChange = (event) => {
+    setMessage(event.target.value);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    console.log(`Sending message: ${message}`);
+    setMessage("");
+    try {
+      const response = await fetch("../services/openai-api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: message }),
+      });
+
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
-    <div className="option-container">
-      <div className="option" onClick={() => handleOptionClick("Option 1")}>
-        Option 1
-      </div>
-      <div className="option" onClick={() => handleOptionClick("Option 2")}>
-        Option 2
-      </div>
-      <div className="option" onClick={() => handleOptionClick("Option 3")}>
-        Option 3
-      </div>
-      <div className="option" onClick={() => handleOptionClick("Option 4")}>
-        Option 4
-      </div>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input type="text" value={message} onChange={handleChange} />
+      <button type="submit">Send</button>
+    </form>
   );
 }
 
